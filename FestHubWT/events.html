@@ -1,0 +1,166 @@
+<?php
+  // Create database connection
+  $db = mysqli_connect("localhost", "root", "", "festhub");
+
+  // Initialize message variable
+  $msg = "";
+
+  // If upload button is clicked ...
+  if (isset($_POST['upload'])) {
+    // Get image name
+    $image = $_FILES['image']['name'];
+    // Get text
+    $image_text = mysqli_real_escape_string($db, $_POST['image_text']);
+
+    // image file directory
+    $target = "images/".basename($image);
+
+    $sql = "INSERT INTO images (image, image_text) VALUES ('$image', '$image_text')";
+    // execute query
+    mysqli_query($db, $sql);
+
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+      $msg = "Image uploaded successfully";
+    }else{
+      $msg = "Failed to upload image";
+    }
+  }
+  $result = mysqli_query($db, "SELECT * FROM images");
+?>
+
+
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - How to Build a Filterable Thumbnail Layout with CSS Grid, Flexbox and JavaScript</title>
+  <link rel="stylesheet" href="./css/events.css">
+
+</head>
+<body>
+  <header>
+        <img src="images/logo.png" alt="leaves society logo">
+        <ul class="menu">
+            <li>Vêtements</li>
+            <li>Chaussures</li>
+            <li>Accessoires</li>
+            <li>Panier</li>
+            <li>Mon compte</li>
+            <li>Contact</li>
+        </ul>
+    </header>
+    <br>
+    <br>
+    <br>
+<!-- partial:index.partial.html -->
+<section class="gallery">
+  <div class="container">
+    <div class="toolbar">
+      <div class="search-wrapper">
+        <input type="search" placeholder="Search for photos">
+        <div class="counter">
+          Total photos: <span>12</span></div>
+      </div>
+      <ul class="view-options">
+        <li class="zoom">
+          <input type="range" min="180" max="380" value="280">
+        </li>
+        <li class="show-grid active">
+          <button disabled>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/grid-view.svg" alt="grid view">  
+          </button>
+        </li>
+        <li class="show-list">
+          <button>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/list-view.svg" alt="list view">  
+          </button>
+        </li>
+      </ul>
+    </div>
+    <ol class="image-list grid-view">
+      <li>
+        <figure>
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature1.jpg" alt="">
+          <figcaption>
+            <p>green leafed trees</p>
+            <p>Photo by <a href="https://unsplash.com/@redcharlie" target="_blank">redcharlie</a></p>
+            <input type="button" name="" class="image-list-btn" value="See Details">
+          </figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature2.jpg" alt="">
+          <figcaption>
+            <p>landscape photography of brown mountain</p>
+            <p>Photo by <a href="https://unsplash.com/@wilstewart3" target="_blank">Wil Stewart</a></p>
+          </figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature3.jpg" alt="">
+          <figcaption>
+            <p>blue starry night</p>
+            <p>Photo by <a href="https://unsplash.com/@ignitedit" target="_blank">Mark Basarab</a></p>
+          </figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature4.jpg" alt="">
+          <figcaption>
+            <p>aerial island and beaches</p>
+            <p>Photo by <a href="https://unsplash.com/@phiestyphung" target="_blank">Amanda Phung</a></p>
+          </figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature5.jpg" alt="">
+          <figcaption>
+            <p>forest pathway</p>
+            <p>Photo by <a href="https://unsplash.com/@elke_karin" target="_blank">Elke Karin Lugert</a></p>
+          </figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/unsplash_nature6.jpg" alt="">
+          <figcaption>
+            <p>photo of two black, white, and orange koi fish</p>
+            <p>Photo by <a href="https://unsplash.com/@s_sagano" target="_blank">Sora Sagano</a></p>
+          </figcaption>
+        </figure>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+      <form method="POST" action="index.php" enctype="multipart/form-data">
+    <input type="hidden" name="size" value="1000000">
+    <div>
+      <input type="file" name="image">
+    </div>
+    <div>
+      <textarea 
+        id="text" 
+        cols="40" 
+        rows="4" 
+        name="image_text" 
+        placeholder="Say something about this image..."></textarea>
+    </div>
+    <div>
+      <button type="submit" name="upload">POST</button>
+    </div>
+  </form>
+  </div>
+</footer>
+<!-- partial -->
+  <script  src="./js/events.js"></script>
+
+</body>
+</html>

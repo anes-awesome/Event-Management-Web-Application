@@ -1,0 +1,46 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <title>FestHub Admin Login</title>
+  <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body>
+<div class="container">
+  <div class="login-icon">
+      FestHub Admin Login
+  </div>
+  <div class="login-form">
+    <div class="login-title">
+      Welcome Admin ;)
+    </div>
+    <div class="login-input-parts">
+      <form name="login" action="servlet" method="post">
+      <input class="login-input" type="text" placeholder="Username" name="adminid" />
+      <input class="login-input" type="password" placeholder="Password" name="adminpass" />
+      <input class="login-input button" type="button" value="Log In"/>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  //const Admin = {UserName: "Admin", Password: "1234"};
+  function check(form) 
+  {
+    if(form.adminid.value == "admin" && form.adminpass.value == "1234") 
+    {
+      alert("lOGIN SUCCESSFULLS")
+      //window.open("./jsp/welcome.jsp")
+      //window.close();
+    }
+    else 
+    {
+      alert("Invalid Username or Password")
+    }
+  }
+</script>
+
+</body>
+</html>
